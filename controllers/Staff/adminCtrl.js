@@ -8,21 +8,30 @@ import generateToken from "../../utils/generateToken.js";
  *@access
  */
 export const getAdminsCtrl = asyncHandler(async (req, res) => {
-  res.status(201).json({
-    message: "Admin created",
-  });
+  const admins = await Admin.find();
+  res.status(200).json({
+    status: "Success",
+    message: "Admins featched successfully",
+    data: {
+      admins,
+    },
+  }); 
 });
 
 /**
- *@description Get admin controller
- *@Route GET /api/v1/admins/single/:id
+ *@description Get admin profile controller
+ *@Route GET /api/v1/admins/profile
  *@access
  */
-export const getAdminCtrl = asyncHandler(async (req, res) => {
+export const getAdminProfileCtrl = asyncHandler(async (req, res) => {
+  const admin = await Admin.findById(req.userAuth._id).select("-password");
+  if (!admin) {
+    throw new Error("Admin not found");
+  }
   res.json({
     status: "Success",
-    message: "User fetched successfully",
-    user: req.userAuth,
+    message: "Admin profile fetched successfully",
+    data: admin,
   });
 });
 
@@ -41,7 +50,7 @@ export const registerAdminCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
     status: "Success",
     message: "Admin registered successfully",
-    user,
+    data: user,
   });
 });
 
@@ -63,9 +72,8 @@ export const loginAdminCtrl = asyncHandler(async (req, res) => {
   const token = generateToken(userFound._id);
   res.status(200).json({
     status: "Success",
-    message: "User login in successfully",
-    user: {
-      userFound,
+    message: "Admin logged in successfully",
+    data: {
       token,
     },
   });

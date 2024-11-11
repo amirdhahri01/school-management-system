@@ -2,7 +2,8 @@ import Admin from "../models/Staff/Admin.js";
 import verifyToken from "../utils/verifyToken.js";
 
 const isLogin = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
+  const token = req?.headers?.authorization?.split(" ")[1];
+  
   const verifiedToken = verifyToken(token);
   if (!verifiedToken) {
     next(new Error("Token expired/invalid"));

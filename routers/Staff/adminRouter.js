@@ -7,7 +7,7 @@ import {
   adminUnwithdrawTeacherCtrl,
   adminWithdrawTeacherCtrl,
   deleteAdminCtrl,
-  getAdminCtrl,
+  getAdminProfileCtrl,
   getAdminsCtrl,
   loginAdminCtrl,
   registerAdminCtrl,
@@ -17,7 +17,7 @@ import isLogin from "../../middlewares/isLogIn.js";
 const adminRoutes = express.Router();
 
 adminRoutes.get("/", isLogin, getAdminsCtrl);
-adminRoutes.get("/single/:id", isLogin, getAdminCtrl);
+adminRoutes.get("/profile", isLogin, getAdminProfileCtrl);
 adminRoutes.post("/register", registerAdminCtrl);
 adminRoutes.post("/login", loginAdminCtrl);
 adminRoutes.put("/suspend/teacher/:id", isLogin, adminSuspendTeacherCtrl);
