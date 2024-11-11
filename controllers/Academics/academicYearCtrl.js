@@ -107,7 +107,7 @@ export const deleteAcademicYearCtrl = asyncHandler(async (req, res) => {
   const academicYear = await AcademicYear.findByIdAndDelete(id, { new: true });
   res.status(200).send({
     status: "Success",
-    messagge: "Academic year fetched successfully",
+    messagge: "Academic year deleted successfully",
     data: {
       academicYear,
     },

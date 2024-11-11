@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const Schema = Schema;
+const Schema = mongoose.Schema;
 
 const ClassLevelSchema = new Schema(
   {

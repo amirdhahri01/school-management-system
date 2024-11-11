@@ -2,7 +2,7 @@ import express from "express";
 import isLogin from "../../middlewares/isLogIn.js";
 import {
   createAcademicTermCtrl,
-  getAcademicTermsCtrl,
+  getAcademicsTermsCtrl,
   getAcademicTermCtrl,
   updateAcademicTermCtrl,
   deleteAcademicTermCtrl,
@@ -11,7 +11,7 @@ import {
 const academicTermRoutes = express.Router();
 academicTermRoutes
   .route("/")
-  .get(isLogin, getAcademicTermsCtrl)
+  .get(isLogin, getAcademicsTermsCtrl)
   .post(isLogin, createAcademicTermCtrl);
 
 academicTermRoutes

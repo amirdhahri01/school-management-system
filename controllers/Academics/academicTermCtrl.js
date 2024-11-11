@@ -36,7 +36,7 @@ export const createAcademicTermCtrl = asyncHandler(async (req, res) => {
  *@Route GET /api/v1/academic-terms
  *@access Private
  */
-export const getAcademicTermsCtrl = asyncHandler(async (req, res) => {
+export const getAcademicsTermsCtrl = asyncHandler(async (req, res) => {
   const academicTerms = await AcademicTerm.find();
   res.status(200).send({
     status: "Success",
@@ -107,7 +107,7 @@ export const deleteAcademicTermCtrl = asyncHandler(async (req, res) => {
   const academicTerm = await AcademicTerm.findByIdAndDelete(id, { new: true });
   res.status(200).send({
     status: "Success",
-    messagge: "Academic term fetched successfully",
+    messagge: "Academic term deleted successfully",
     data: {
       academicTerm,
     },

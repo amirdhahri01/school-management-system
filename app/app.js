@@ -7,6 +7,7 @@ import {
 } from "../middlewares/globalErrorHandler.js";
 import academicYearRoutes from "../routers/Academics/academicYearRouter.js";
 import academicTermRoutes from "../routers/Academics/academicTermRouter.js";
+import ClassLevelRoutes from "../routers/Academics/classLevelRouter.js";
 
 const app = express();
 //====Middleware====
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api/v1/admins/", adminRoutes);
 app.use("/api/v1/academic-years/", academicYearRoutes);
 app.use("/api/v1/academic-terms/", academicTermRoutes);
+app.use("/api/v1/class-levels/", ClassLevelRoutes);
 app.use(notFound);
 app.use(globalErrorHandler);
 export default app;
