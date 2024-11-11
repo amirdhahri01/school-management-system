@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Admin from "../../models/Staff/Admin.js";
+import generateToken from "../../utils/generateToken.js";
 
 /**
  *@description Get admins controller
@@ -14,12 +15,14 @@ export const getAdminsCtrl = asyncHandler(async (req, res) => {
 
 /**
  *@description Get admin controller
- *@Route GET /api/v1/admins/:id
+ *@Route GET /api/v1/admins/single/:id
  *@access
  */
 export const getAdminCtrl = asyncHandler(async (req, res) => {
-  res.status(201).json({
-    message: "Admin created",
+  res.json({
+    status: "Success",
+    message: "User fetched successfully",
+    user: req.userAuth,
   });
 });
 
@@ -56,10 +59,15 @@ export const loginAdminCtrl = asyncHandler(async (req, res) => {
   if (!(await userFound.verifyPassword(password))) {
     throw new Error("Invalid login credentials");
   }
+  req.authUser = userFound;
+  const token = generateToken(userFound._id);
   res.status(200).json({
     status: "Success",
     message: "User login in successfully",
-    userFound,
+    user: {
+      userFound,
+      token,
+    },
   });
 });
 
