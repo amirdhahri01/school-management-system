@@ -66,7 +66,7 @@ export const getAcademicYearCtrl = asyncHandler(async (req, res) => {
 
 /**
  *@description Update academic year controller
- *@Route PUT /api/v1/academic-years/update/:id
+ *@Route PUT /api/v1/academic-years/:id
  *@access Private
  */
 export const updateAcademicYearCtrl = asyncHandler(async (req, res) => {
@@ -99,7 +99,7 @@ export const updateAcademicYearCtrl = asyncHandler(async (req, res) => {
 
 /**
  *@description Delete academic year controller
- *@Route DELETE /api/v1/academic-years/delete/:id
+ *@Route DELETE /api/v1/academic-years/:id
  *@access Private
  */
 export const deleteAcademicYearCtrl = asyncHandler(async (req, res) => {

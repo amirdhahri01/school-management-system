@@ -25,7 +25,9 @@ export const getAdminsCtrl = asyncHandler(async (req, res) => {
  *@access
  */
 export const getAdminProfileCtrl = asyncHandler(async (req, res) => {
-  const admin = await Admin.findById(req.userAuth._id).select("-password");
+  const admin = await Admin.findById(req.userAuth._id)
+    .select("-password")
+    .populate("academicYears");
   if (!admin) {
     throw new Error("Admin not found");
   }
@@ -71,7 +73,7 @@ export const loginAdminCtrl = asyncHandler(async (req, res) => {
   if (!userFound) {
     throw new Error("User not found");
   }
-  if (!isPasswordMatch(userFound.password , password)) {
+  if (!isPasswordMatch(userFound.password, password)) {
     throw new Error("Invalid login credentials");
   }
   req.authUser = userFound;
