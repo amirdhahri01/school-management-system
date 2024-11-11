@@ -1,23 +1,23 @@
 import express from "express";
 import isLogin from "../../middlewares/isLogIn.js";
 import {
-  createAcademicTermCtrl,
-  getAcademicTermsCtrl,
-  getAcademicTermCtrl,
-  updateAcademicTermCtrl,
-  deleteAcademicTermCtrl,
-} from "../../controllers/Academics/academicTermCtrl.js";
+  createAcademicYearCtrl,
+  getAcademicYearsCtrl,
+  getAcademicYearCtrl,
+  updateAcademicYearCtrl,
+  deleteAcademicYearCtrl,
+} from "../../controllers/Academics/academicYearCtrl.js";
 
-const academicTermRoutes = express.Router();
-academicTermRoutes
+const academicYearRoutes = express.Router();
+academicYearRoutes
   .route("/")
-  .get(isLogin, getAcademicTermsCtrl)
-  .post(isLogin, createAcademicTermCtrl);
+  .get(isLogin, getAcademicYearsCtrl)
+  .post(isLogin, createAcademicYearCtrl);
 
-academicTermRoutes
+academicYearRoutes
   .route("/:id") 
-  .get(isLogin, getAcademicTermCtrl)
-  .put(isLogin, updateAcademicTermCtrl)
-  .delete(isLogin, deleteAcademicTermCtrl);
+  .get(isLogin, getAcademicYearCtrl)
+  .put(isLogin, updateAcademicYearCtrl)
+  .delete(isLogin, deleteAcademicYearCtrl);
 
-export default academicTermRoutes;
+export default academicYearRoutes;
