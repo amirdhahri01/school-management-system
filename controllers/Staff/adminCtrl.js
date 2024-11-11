@@ -45,11 +45,21 @@ export const registerAdminCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Login admin
  *@Route POST /api/v1/admins/login
- *@access
+ *@access Private
  */
 export const loginAdminCtrl = asyncHandler(async (req, res) => {
-  res.status(201).json({
-    message: "Admin created",
+  const { password, email } = req.body;
+  const userFound = await Admin.findOne({ email });
+  if (!userFound) {
+    throw new Error("User not found");
+  }
+  if (!(await userFound.verifyPassword(password))) {
+    throw new Error("Invalid login credentials");
+  }
+  res.status(200).json({
+    status: "Success",
+    message: "User login in successfully",
+    userFound,
   });
 });
 
