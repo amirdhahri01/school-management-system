@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Admin from "../../models/Staff/Admin.js";
 import generateToken from "../../utils/generateToken.js";
+import { hashPassword, isPasswordMatch } from "../../utils/helpers.js";
 
 /**
  *@description Get admins controller
@@ -15,7 +16,7 @@ export const getAdminsCtrl = asyncHandler(async (req, res) => {
     data: {
       admins,
     },
-  }); 
+  });
 });
 
 /**
@@ -46,7 +47,12 @@ export const registerAdminCtrl = asyncHandler(async (req, res) => {
   if (adminFound) {
     throw new Error("Admin already exists");
   }
-  const user = await Admin.create({ name, email, password });
+  const hasedPassword = hashPassword(password);
+  const user = await Admin.create({
+    name,
+    email,
+    password: hasedPassword,
+  });
   res.status(201).json({
     status: "Success",
     message: "Admin registered successfully",
@@ -65,14 +71,14 @@ export const loginAdminCtrl = asyncHandler(async (req, res) => {
   if (!userFound) {
     throw new Error("User not found");
   }
-  if (!(await userFound.verifyPassword(password))) {
+  if (!isPasswordMatch(userFound.password , password)) {
     throw new Error("Invalid login credentials");
   }
   req.authUser = userFound;
   const token = generateToken(userFound._id);
   res.status(200).json({
     status: "Success",
-    message: "Admin logged in successfully",
+    message: "User logged in successfully",
     data: {
       token,
     },
@@ -81,12 +87,27 @@ export const loginAdminCtrl = asyncHandler(async (req, res) => {
 
 /**
  *@description Update admin
- *@Route PUT /api/v1/admins/update/:id
+ *@Route PUT /api/v1/admins/update
  *@access
  */
 export const updateAdminCtrl = asyncHandler(async (req, res) => {
-  res.status(201).json({
-    message: "Admin created",
+  const { email, name, password } = req.body;
+  const emailExists = await Admin.findOne({ email });
+  if (emailExists) {
+    throw new Error("This email is taken/exists");
+  }
+  const hasedPassword = hashPassword(password);
+  const admin = await Admin.findByIdAndUpdate(
+    req.userAuth._id,
+    { email, name, password: hasedPassword },
+    { new: true, runValidators: true }
+  );
+  res.status(200).json({
+    status: "Success",
+    message: "Admin updated successfully",
+    data: {
+      admin,
+    },
   });
 });
 
