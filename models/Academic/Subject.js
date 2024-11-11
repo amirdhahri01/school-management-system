@@ -28,7 +28,7 @@ const subjectSchema = new Schema(
     },
     duration: {
       type: String,
-      required: true,
+      required: true, 
       default: "3 months",
     },
   },

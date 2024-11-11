@@ -6,7 +6,7 @@ const ClassLevelSchema = new Schema(
   {
     //level100/200/300/400
     name: {
-      type: String,
+      type: String, 
       required: true,
     },
     description: {
