@@ -22,7 +22,7 @@ adminRoutes.get("/", isLogin, getAdminsCtrl);
 adminRoutes.get("/profile", isLogin, isAdmin, getAdminProfileCtrl);
 adminRoutes.post("/register", registerAdminCtrl);
 adminRoutes.post("/login", loginAdminCtrl);
-adminRoutes.put("/update", isLogin, isAdmin, updateAdminCtrl);
+adminRoutes.put("/update/:id", isLogin, isAdmin, updateAdminCtrl);
 adminRoutes.put("/suspend/teacher/:id", isLogin, adminSuspendTeacherCtrl);
 adminRoutes.put("/unsuspend/teacher/:id", isLogin, adminUnsuspendTeacherCtrl);
 adminRoutes.put("/withdraw/teacher/:id", isLogin, adminWithdrawTeacherCtrl);

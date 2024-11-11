@@ -25,6 +25,12 @@ const adminSchema = new Schema(
         ref: "AcademicTerm",
       },
     ],
+    academicYears: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "AcademicYear",
+      },
+    ],
     classYears: [
       {
         type: Schema.Types.ObjectId,
