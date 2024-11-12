@@ -11,7 +11,7 @@ import ClassLevelRoutes from "../routers/Academics/classLevelRouter.js";
 import ProgramRoutes from "../routers/Academics/programRouter.js";
 import SubjectRoutes from "../routers/Academics/subjectRouter.js";
 import YearGroupRoutes from "../routers/Academics/yearGroupRouter.js";
-import teacherRoutes from "../routers/Academics/teacherRouter.js";
+import teacherRoutes from "../routers/Staff/teacherRouter.js";
 
 const app = express();
 //====Middleware====

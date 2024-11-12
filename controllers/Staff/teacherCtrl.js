@@ -140,3 +140,43 @@ export const updateTeacherProfile = asyncHandler(async (req, res) => {
     },
   });
 });
+
+/**
+ *@description Admin update teacher profile controller
+ *@Route PUT /api/v1/teachers/admin/update/:teacherID
+ *@access Private admin only
+ */
+export const adminUpdateTeacherProfile = asyncHandler(async (req, res) => {
+  const { teacherID } = req.params;
+  const { program, classLevel, academicYear, subject } = req.body;
+  const teacherFound = await Teacher.findById(teacherID);
+  if (!teacherFound) {
+    throw new Error("Teacher not found");
+  }
+  if (teacherFound.isWitdrawn) {
+    throw new Error("Action denied, teacher is withdraw");
+  }
+  if (program) {
+    teacherFound.program = program;
+    await teacherFound.save();
+  }
+  if (classLevel) {
+    teacherFound.classLevel = classLevel;
+    await teacherFound.save();
+  }
+  if (academicYear) {
+    teacherFound.academicYear = academicYear;
+    await teacherFound.save();
+  }
+  if (subject) {
+    teacherFound.subject = subject;
+    await teacherFound.save();
+  }
+  res.status(200).json({
+    status: "Success",
+    message: "Teacher profile updated successfully",
+    data: {
+      teacherFound,
+    },
+  });
+});
