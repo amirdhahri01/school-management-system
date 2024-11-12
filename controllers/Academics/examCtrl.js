@@ -10,7 +10,7 @@ import Exam from "../../models/Academic/Exam.js";
 export const createExamCtrl = asyncHandler(async (req, res) => {
   const {
     name,
-    descrition,
+    description,
     subject,
     program,
     academicTerm,
@@ -19,18 +19,19 @@ export const createExamCtrl = asyncHandler(async (req, res) => {
     examTime,
     examType,
     academicYear,
+    classLevel,
   } = req.body;
   const teacherFound = await Teacher.findById(req.userAuth?._id);
   if (!teacherFound) {
     throw new Error("Teacher not found");
   }
-  const examExists = await Exam.findById({ name });
+  const examExists = await Exam.findOne({ name });
   if (examExists) {
     throw new Error("Exam already exists");
   }
   const exam = new Exam({
     name,
-    descrition,
+    description,
     subject,
     program,
     academicTerm,
@@ -39,6 +40,7 @@ export const createExamCtrl = asyncHandler(async (req, res) => {
     examTime,
     examType,
     academicYear,
+    classLevel,
     createdBy: req.userAuth?._id,
   });
   teacherFound.examsCreated.push(exam?._id);
