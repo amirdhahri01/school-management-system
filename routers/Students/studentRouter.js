@@ -7,14 +7,14 @@ import {
   // getStudentCtrl,
   // getStudentProfileCtrl,
   // getStudentsCtrl,
-  // loginStudentCtrl,
+  loginStudentCtrl,
   // updateStudentProfileCtrl,
 } from "../../controllers/Students/studentCtrl.js";
 
 const studentRoutes = express.Router();
 
-studentRoutes.post("/admin/register", isLogin, isAdmin, adminRegisterStudentCtrl);
-// studentRoutes.post("/login", loginStudentCtrl);
+studentRoutes.post("/admin/register", isLogin, isAdmin, adminRegisterStudentCtrl)
+studentRoutes.post("/login", loginStudentCtrl);
 // studentRoutes.get("/admin", getStudentsCtrl);
 // studentRoutes.get("/admin/:StudentID", getStudentCtrl);
 // studentRoutes.get("/profile", getStudentProfileCtrl);

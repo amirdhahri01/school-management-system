@@ -31,25 +31,24 @@ export const adminRegisterStudentCtrl = asyncHandler(async (req, res) => {
 });
 
 /**
- *@description Login teacher
- *@Route POST /api/v1/teachers/login
- *@access Private
+ *@description Login student
+ *@Route POST /api/v1/students/login
+ *@access Public
  */
-export const loginTeacherCtrl = asyncHandler(async (req, res) => {
+export const loginStudentCtrl = asyncHandler(async (req, res) => {
   const { password, email } = req.body;
-  const teacherFound = await Teacher.findOne({ email });
-  if (!teacherFound) {
-    throw new Error("Teacher not found");
+  const studentFound = await Student.findOne({ email });
+  if (!studentFound) {
+    throw new Error("Student not found");
   }
-  const isMatched = await isPasswordMatch(password, teacherFound.password);
+  const isMatched = await isPasswordMatch(password, studentFound.password);
   if (!isMatched) {
     throw new Error("Invalid login credentials");
   }
-  req.authUser = teacherFound;
-  const token = generateToken(teacherFound._id);
+  const token = generateToken(studentFound._id);
   res.status(200).json({
     status: "Success",
-    message: "Teacher logged in successfully",
+    message: "Student logged in successfully",
     data: {
       token,
     },
