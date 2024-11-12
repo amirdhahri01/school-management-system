@@ -24,7 +24,7 @@ export const createAcademicTermCtrl = asyncHandler(async (req, res) => {
   admin.save();
   res.status(201).send({
     status: "Success",
-    messagge: "Academic term created successfully",
+    message: "Academic term created successfully",
     data: {
       academicTerm,
     },
@@ -40,7 +40,7 @@ export const getAcademicsTermsCtrl = asyncHandler(async (req, res) => {
   const academicTerms = await AcademicTerm.find();
   res.status(200).send({
     status: "Success",
-    messagge: "Academic Terms fetched successfully",
+    message: "Academic Terms fetched successfully",
     data: {
       academicTerms,
     },
@@ -57,7 +57,7 @@ export const getAcademicTermCtrl = asyncHandler(async (req, res) => {
   const academicTerm = await AcademicTerm.findById(id);
   res.status(200).send({
     status: "Success",
-    messagge: "Academic term fetched successfully",
+    message: "Academic term fetched successfully",
     data: {
       academicTerm,
     },
@@ -90,7 +90,7 @@ export const updateAcademicTermCtrl = asyncHandler(async (req, res) => {
   );
   res.status(200).send({
     status: "Success",
-    messagge: "Academic term updated successfully",
+    message: "Academic term updated successfully",
     data: {
       academicTerm,
     },
@@ -107,7 +107,7 @@ export const deleteAcademicTermCtrl = asyncHandler(async (req, res) => {
   const academicTerm = await AcademicTerm.findByIdAndDelete(id, { new: true });
   res.status(200).send({
     status: "Success",
-    messagge: "Academic term deleted successfully",
+    message: "Academic term deleted successfully",
     data: {
       academicTerm,
     },

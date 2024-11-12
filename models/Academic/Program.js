@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const programSchema = new Schema(
   {
     name: {
-      type: Strnig,
+      type: String,
       required: true,
     },
     description: {

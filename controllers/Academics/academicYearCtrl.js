@@ -24,7 +24,7 @@ export const createAcademicYearCtrl = asyncHandler(async (req, res) => {
   admin.save();
   res.status(201).send({
     status: "Success",
-    messagge: "Academic year created successfully",
+    message: "Academic year created successfully",
     data: {
       academicYear,
     },
@@ -40,7 +40,7 @@ export const getAcademicYearsCtrl = asyncHandler(async (req, res) => {
   const academicYears = await AcademicYear.find();
   res.status(200).send({
     status: "Success",
-    messagge: "Academic years fetched successfully",
+    message: "Academic years fetched successfully",
     data: {
       academicYears,
     },
@@ -57,7 +57,7 @@ export const getAcademicYearCtrl = asyncHandler(async (req, res) => {
   const academicYear = await AcademicYear.findById(id);
   res.status(200).send({
     status: "Success",
-    messagge: "Academic year fetched successfully",
+    message: "Academic year fetched successfully",
     data: {
       academicYear,
     },
@@ -90,7 +90,7 @@ export const updateAcademicYearCtrl = asyncHandler(async (req, res) => {
   );
   res.status(200).send({
     status: "Success",
-    messagge: "Academic year updated successfully",
+    message: "Academic year updated successfully",
     data: {
       academicYear,
     },
@@ -107,7 +107,7 @@ export const deleteAcademicYearCtrl = asyncHandler(async (req, res) => {
   const academicYear = await AcademicYear.findByIdAndDelete(id, { new: true });
   res.status(200).send({
     status: "Success",
-    messagge: "Academic year deleted successfully",
+    message: "Academic year deleted successfully",
     data: {
       academicYear,
     },

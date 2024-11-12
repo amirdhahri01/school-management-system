@@ -55,6 +55,12 @@ const adminSchema = new Schema(
         ref: "Student",
       },
     ],
+    programs: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Program",
+      },
+    ],
   },
   { timestamps: true }
 );

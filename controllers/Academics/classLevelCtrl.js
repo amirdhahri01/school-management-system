@@ -23,7 +23,7 @@ export const createClassLevelCtrl = asyncHandler(async (req, res) => {
   admin.save();
   res.status(201).send({
     status: "Success",
-    messagge: "Class level created successfully",
+    message: "Class level created successfully",
     data: {
       classLevel,
     },
@@ -39,7 +39,7 @@ export const getClassLevelsCtrl = asyncHandler(async (req, res) => {
   const classLevels = await ClassLevel.find();
   res.status(200).send({
     status: "Success",
-    messagge: "Class levels fetched successfully",
+    message: "Class levels fetched successfully",
     data: {
       classLevels,
     },
@@ -53,10 +53,10 @@ export const getClassLevelsCtrl = asyncHandler(async (req, res) => {
  */
 export const getClassLevelCtrl = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const classLevel = await classLevel.findById(id);
+  const classLevel = await ClassLevel.findById(id);
   res.status(200).send({
     status: "Success",
-    messagge: "Class level fetched successfully",
+    message: "Class level fetched successfully",
     data: {
       classLevel,
     },
@@ -88,7 +88,7 @@ export const updateClassLevelCtrl = asyncHandler(async (req, res) => {
   );
   res.status(200).send({
     status: "Success",
-    messagge: "Class level updated successfully",
+    message: "Class level updated successfully",
     data: {
       classLevel,
     },
@@ -105,7 +105,7 @@ export const deleteClassLevelCtrl = asyncHandler(async (req, res) => {
   const classLevel = await ClassLevel.findByIdAndDelete(id, { new: true });
   res.status(200).send({
     status: "Success",
-    messagge: "Class level deleted successfully",
+    message: "Class level deleted successfully",
     data: {
       classLevel,
     },
