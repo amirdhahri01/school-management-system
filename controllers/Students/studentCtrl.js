@@ -56,77 +56,77 @@ export const loginStudentCtrl = asyncHandler(async (req, res) => {
 });
 
 /**
- *@description Get teachers
- *@Route GET /api/v1/teachers/admin
+ *@description Get students
+ *@Route GET /api/v1/students/admin
  *@access Private admin only
  */
-export const getTeachersCtrl = asyncHandler(async (req, res) => {
-  const teachers = await Teacher.find();
+export const getStudentsCtrl = asyncHandler(async (req, res) => {
+  const students = await Student.find();
   res.status(200).json({
     status: "Success",
-    message: "Teachers fetched sucessfully",
+    message: "Students fetched sucessfully",
     data: {
-      teachers,
+      students,
     },
   });
 });
 
 /**
- *@description Get teacher
- *@Route GET /api/v1/teachers/admin/:teacherID
+ *@description Get student
+ *@Route GET /api/v1/students/admin/:studentID
  *@access Private admin only
  */
-export const getTeacherCtrl = asyncHandler(async (req, res) => {
-  const { teacherID } = req.params;
-  const teacher = await Teacher.findById(teacherID);
+export const getStudentCtrl = asyncHandler(async (req, res) => {
+  const { studentID } = req.params;
+  const student = await Student.findById(studentID);
   res.status(200).json({
     status: "Success",
-    message: "Teacher fetched sucessfully",
+    message: "Student fetched sucessfully",
     data: {
-      teacher,
+      student,
     },
   });
 });
 
 /**
- *@description Get teacher profile
- *@Route GET /api/v1/teachers/profile
- *@access Private teacher only
+ *@description Get student profile
+ *@Route GET /api/v1/students/profile
+ *@access Private student only
  */
-export const getTeacherProfileCtrl = asyncHandler(async (req, res) => {
-  const teacherProfile = await Teacher.findById(req.userAuth?._id).select(
+export const getStudentProfileCtrl = asyncHandler(async (req, res) => {
+  const studentProfile = await Student.findById(req.userAuth?._id).select(
     "-password -createdAt -updatedAt"
   );
-  if (!teacherProfile) {
-    throw new Error("Teacher doesn't exists");
+  if (!studentProfile) {
+    throw new Error("Student doesn't exists");
   }
   res.status(200).json({
     status: "Success",
-    message: "Teacher profile fetched sucessfully",
+    message: "Student profile fetched sucessfully",
     data: {
-      teacherProfile,
+      studentProfile,
     },
   });
 });
 
 /**
- *@description Teacher update profile controller
- *@Route PUT /api/v1/teachers/update
- *@access Private teacher only
+ *@description Student update profile controller
+ *@Route PUT /api/v1/students/update
+ *@access Private student only
  */
-export const updateTeacherProfileCtrl = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
-  const teacherFound = await Teacher.findOne(email);
-  if (!teacherFound) {
+export const updateStudentProfileCtrl = asyncHandler(async (req, res) => {
+  const {email, password } = req.body;
+  const studentFound = await Student.findOne(email);
+  if (!studentFound) {
     throw new Error("This email is taken/exists");
   }
   const hashedPassword = "";
   if (password) {
     hashedPassword = await hashPassword(password);
   }
-  const teacher = await Teacher.findByIdAndUpdate(
+  const student = await Student.findByIdAndUpdate(
     req.userAuth._id,
-    { name, email, password: hashedPassword },
+    {  email, password: hashedPassword },
     {
       new: true,
       runValidators: true,
@@ -134,16 +134,16 @@ export const updateTeacherProfileCtrl = asyncHandler(async (req, res) => {
   );
   res.status(200).json({
     status: "Success",
-    message: "Teacher profile updated successfully",
+    message: "Student profile updated successfully",
     data: {
-      teacher,
+      student,
     },
   });
 });
 
 /**
- *@description Admin update teacher profile controller
- *@Route PUT /api/v1/teachers/admin/update/:teacherID
+ *@description Admin update student profile controller
+ *@Route PUT /api/v1/students/admin/update/:studentID
  *@access Private admin only
  */
 export const adminUpdateTeacherProfileCtrl = asyncHandler(async (req, res) => {

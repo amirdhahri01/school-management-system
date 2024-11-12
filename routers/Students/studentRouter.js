@@ -4,21 +4,28 @@ import isAdmin from "../../middlewares/isAdmin.js";
 import {
   adminRegisterStudentCtrl,
   // adminUpdateStudentProfileCtrl,
-  // getStudentCtrl,
-  // getStudentProfileCtrl,
-  // getStudentsCtrl,
+  getStudentCtrl,
+  getStudentProfileCtrl,
+  getStudentsCtrl,
   loginStudentCtrl,
-  // updateStudentProfileCtrl,
+  updateStudentProfileCtrl,
 } from "../../controllers/Students/studentCtrl.js";
+import isStudentLogin from "../../middlewares/isStudentLogIn.js";
+import isStudent from "../../middlewares/isStudent.js";
 
 const studentRoutes = express.Router();
 
-studentRoutes.post("/admin/register", isLogin, isAdmin, adminRegisterStudentCtrl)
+studentRoutes.post(
+  "/admin/register",
+  isLogin,
+  isAdmin,
+  adminRegisterStudentCtrl
+);
 studentRoutes.post("/login", loginStudentCtrl);
-// studentRoutes.get("/admin", getStudentsCtrl);
-// studentRoutes.get("/admin/:StudentID", getStudentCtrl);
-// studentRoutes.get("/profile", getStudentProfileCtrl);
-// studentRoutes.put("/update/:StudentID", updateStudentProfileCtrl);
-// studentRoutes.put("/admin/update/:StudentID", adminUpdateStudentProfileCtrl);
+studentRoutes.get("/admin", isLogin, isAdmin, getStudentsCtrl);
+studentRoutes.get("/admin/:studentID", isLogin, isAdmin, getStudentCtrl);
+studentRoutes.get("/profile",isStudentLogin , isStudent, getStudentProfileCtrl);
+studentRoutes.put("/update/:studentID", updateStudentProfileCtrl);
+studentRoutes.put("/admin/update/:studentID", updateStudentProfileCtrl);
 
 export default studentRoutes;
