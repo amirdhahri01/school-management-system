@@ -8,6 +8,8 @@ export const hashPassword = async (password) => {
     return hasedPassword
 }
 
+//1.Compare passwords
+
 export const isPasswordMatch = async (enteredPassword , password) => {
     return await bcrypt.compare(enteredPassword, password);
 }

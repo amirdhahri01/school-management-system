@@ -76,7 +76,8 @@ export const loginAdminCtrl = asyncHandler(async (req, res) => {
   if (!userFound) {
     throw new Error("User not found");
   }
-  if (!isPasswordMatch(userFound.password, password)) {
+  const isMatched = await isPasswordMatch(password, userFound.password);
+  if (!isMatched) {
     throw new Error("Invalid login credentials");
   }
   req.authUser = userFound;

@@ -11,6 +11,7 @@ import ClassLevelRoutes from "../routers/Academics/classLevelRouter.js";
 import ProgramRoutes from "../routers/Academics/programRouter.js";
 import SubjectRoutes from "../routers/Academics/subjectRouter.js";
 import YearGroupRoutes from "../routers/Academics/yearGroupRouter.js";
+import teacherRoutes from "../routers/Academics/teacherRouter.js";
 
 const app = express();
 //====Middleware====
@@ -24,6 +25,7 @@ app.use("/api/v1/class-levels/", ClassLevelRoutes);
 app.use("/api/v1/programs/", ProgramRoutes);
 app.use("/api/v1/subjects/", SubjectRoutes);
 app.use("/api/v1/year-groups/", YearGroupRoutes);
+app.use("/api/v1/teachers/", teacherRoutes);
 app.use(notFound);
 app.use(globalErrorHandler);
 export default app;

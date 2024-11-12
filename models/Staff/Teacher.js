@@ -6,7 +6,7 @@ const teacherSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
@@ -91,7 +91,6 @@ const teacherSchema = new Schema(
   }
 );
 
-//model
 const Teacher = mongoose.model("Teacher", teacherSchema);
 
-module.exports = Teacher;
+export default Teacher
