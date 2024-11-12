@@ -6,7 +6,7 @@ import generateToken from "../../utils/generateToken.js";
 /**
  *@description Admin register teacher controller
  *@Route POST /api/v1/teachers/admin/register
- *@access Private
+ *@access Private - Admin Only
  */
 export const adminRegisterTeacherCtrl = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -32,7 +32,7 @@ export const adminRegisterTeacherCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Login teacher
  *@Route POST /api/v1/teachers/login
- *@access Private
+ *@access Public
  */
 export const loginTeacherCtrl = asyncHandler(async (req, res) => {
   const { password, email } = req.body;
@@ -58,7 +58,7 @@ export const loginTeacherCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Get teachers
  *@Route GET /api/v1/teachers/admin
- *@access Private admin only
+ *@access Private - Admin Only
  */
 export const getTeachersCtrl = asyncHandler(async (req, res) => {
   const teachers = await Teacher.find();
@@ -74,7 +74,7 @@ export const getTeachersCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Get teacher
  *@Route GET /api/v1/teachers/admin/:teacherID
- *@access Private admin only
+ *@access Private - Admin Only
  */
 export const getTeacherCtrl = asyncHandler(async (req, res) => {
   const { teacherID } = req.params;
@@ -91,7 +91,7 @@ export const getTeacherCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Get teacher profile
  *@Route GET /api/v1/teachers/profile
- *@access Private teacher only
+ *@access Private - Teacher Only
  */
 export const getTeacherProfileCtrl = asyncHandler(async (req, res) => {
   const teacherProfile = await Teacher.findById(req.userAuth?._id).select(
@@ -112,7 +112,7 @@ export const getTeacherProfileCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Teacher update profile controller
  *@Route PUT /api/v1/teachers/update
- *@access Private teacher only
+ *@access Private - Teacher Only
  */
 export const updateTeacherProfileCtrl = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -144,7 +144,7 @@ export const updateTeacherProfileCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin update teacher profile controller
  *@Route PUT /api/v1/teachers/admin/update/:teacherID
- *@access Private admin only
+ *@access Private - Admin Only
  */
 export const adminUpdateTeacherProfileCtrl = asyncHandler(async (req, res) => {
   const { teacherID } = req.params;

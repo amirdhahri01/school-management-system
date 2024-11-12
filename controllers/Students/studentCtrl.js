@@ -7,7 +7,7 @@ import Student from "../../models/Staff/Student.js";
 /**
  *@description Admin register student controller
  *@Route POST /api/v1/students/admin/register
- *@access Private
+ *@access Private - Admin Only
  */
 export const adminRegisterStudentCtrl = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -58,7 +58,7 @@ export const loginStudentCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Get students
  *@Route GET /api/v1/students/admin
- *@access Private admin only
+ *@access Private - Admin Only
  */
 export const getStudentsCtrl = asyncHandler(async (req, res) => {
   const students = await Student.find();
@@ -74,7 +74,7 @@ export const getStudentsCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Get student
  *@Route GET /api/v1/students/admin/:studentID
- *@access Private admin only
+ *@access Private - Admin Only
  */
 export const getStudentCtrl = asyncHandler(async (req, res) => {
   const { studentID } = req.params;
@@ -91,7 +91,7 @@ export const getStudentCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Get student profile
  *@Route GET /api/v1/students/profile
- *@access Private student only
+ *@access Private - Student Only
  */
 export const getStudentProfileCtrl = asyncHandler(async (req, res) => {
   const studentProfile = await Student.findById(req.userAuth?._id).select(
@@ -112,10 +112,10 @@ export const getStudentProfileCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Student update profile controller
  *@Route PUT /api/v1/students/update
- *@access Private student only
+ *@access Private - Student Only
  */
 export const updateStudentProfileCtrl = asyncHandler(async (req, res) => {
-  const {email, password } = req.body;
+  const { email, password } = req.body;
   const studentFound = await Student.findOne(email);
   if (!studentFound) {
     throw new Error("This email is taken/exists");
@@ -126,7 +126,7 @@ export const updateStudentProfileCtrl = asyncHandler(async (req, res) => {
   }
   const student = await Student.findByIdAndUpdate(
     req.userAuth._id,
-    {  email, password: hashedPassword },
+    { email, password: hashedPassword },
     {
       new: true,
       runValidators: true,
@@ -144,39 +144,29 @@ export const updateStudentProfileCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin update student profile controller
  *@Route PUT /api/v1/students/admin/update/:studentID
- *@access Private admin only
+ *@access Private - Admin Only
  */
-export const adminUpdateTeacherProfileCtrl = asyncHandler(async (req, res) => {
-  const { teacherID } = req.params;
-  const { program, classLevel, academicYear, subject } = req.body;
-  const teacherFound = await Teacher.findById(teacherID);
-  if (!teacherFound) {
-    throw new Error("Teacher not found");
+export const adminUpdateStudentProfileCtrl = asyncHandler(async (req, res) => {
+  const { classLevels, academicYear, program, name, email, prefectName } =
+    req.body;
+  const { studentID } = req.params;
+  const studentFound = Student.findById(studentID);
+  if (!studentFound) {
+    throw new Error("Student not found");
   }
-  if (teacherFound.isWitdrawn) {
-    throw new Error("Action denied, teacher is withdraw");
-  }
-  if (program) {
-    teacherFound.program = program;
-    await teacherFound.save();
-  }
-  if (classLevel) {
-    teacherFound.classLevel = classLevel;
-    await teacherFound.save();
-  }
-  if (academicYear) {
-    teacherFound.academicYear = academicYear;
-    await teacherFound.save();
-  }
-  if (subject) {
-    teacherFound.subject = subject;
-    await teacherFound.save();
-  }
+  const student = Student.findByIdAndUpdate(
+    studentID,
+    {
+      $set: { academicYear, program, name, email, prefectName },
+      $addToSet: { classLevels },
+    },
+    { new: true }
+  );
   res.status(200).json({
     status: "Success",
-    message: "Teacher profile updated successfully",
+    message: "Student profile updated successfully",
     data: {
-      teacherFound,
+      student,
     },
   });
 });

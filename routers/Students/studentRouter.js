@@ -3,7 +3,7 @@ import isLogin from "../../middlewares/isLogin.js";
 import isAdmin from "../../middlewares/isAdmin.js";
 import {
   adminRegisterStudentCtrl,
-  // adminUpdateStudentProfileCtrl,
+  adminUpdateStudentProfileCtrl,
   getStudentCtrl,
   getStudentProfileCtrl,
   getStudentsCtrl,
@@ -24,8 +24,18 @@ studentRoutes.post(
 studentRoutes.post("/login", loginStudentCtrl);
 studentRoutes.get("/admin", isLogin, isAdmin, getStudentsCtrl);
 studentRoutes.get("/admin/:studentID", isLogin, isAdmin, getStudentCtrl);
-studentRoutes.get("/profile",isStudentLogin , isStudent, getStudentProfileCtrl);
-studentRoutes.put("/update/:studentID", updateStudentProfileCtrl);
-studentRoutes.put("/admin/update/:studentID", updateStudentProfileCtrl);
+studentRoutes.get("/profile", isStudentLogin, isStudent, getStudentProfileCtrl);
+studentRoutes.put(
+  "/update/:studentID",
+  isStudentLogin,
+  isStudent,
+  updateStudentProfileCtrl
+);
+studentRoutes.put(
+  "/admin/update/:studentID",
+  isLogin,
+  isAdmin,
+  adminUpdateStudentProfileCtrl
+);
 
 export default studentRoutes;

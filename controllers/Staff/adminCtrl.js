@@ -6,7 +6,7 @@ import { hashPassword, isPasswordMatch } from "../../utils/helpers.js";
 /**
  *@description Get admins controller
  *@Route GET /api/v1/admins
- *@access
+ *@access Private - Admin Only
  */
 export const getAdminsCtrl = asyncHandler(async (req, res) => {
   const admins = await Admin.find();
@@ -22,7 +22,7 @@ export const getAdminsCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Get admin profile controller
  *@Route GET /api/v1/admins/profile
- *@access
+ *@access Private - Admin Only
  */
 export const getAdminProfileCtrl = asyncHandler(async (req, res) => {
   const admin = await Admin.findById(req.userAuth._id)
@@ -44,7 +44,7 @@ export const getAdminProfileCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Register admin controller
  *@Route POST /api/v1/admins/register
- *@access Private
+ *@access Private - Admin Only
  */
 export const registerAdminCtrl = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -68,7 +68,7 @@ export const registerAdminCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Login admin
  *@Route POST /api/v1/admins/login
- *@access Private
+ *@access Public
  */
 export const loginAdminCtrl = asyncHandler(async (req, res) => {
   const { password, email } = req.body;
@@ -94,7 +94,7 @@ export const loginAdminCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Update admin
  *@Route PUT /api/v1/admins/update
- *@access
+ *@access Private - Admin Only
  */
 export const updateAdminCtrl = asyncHandler(async (req, res) => {
   const { email, name, password } = req.body;
@@ -123,7 +123,7 @@ export const updateAdminCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin suspend teacher controller
  *@Route PUT /api/v1/admins/suspend/teacher/:id
- *@access
+ *@access Private - Admin Only
  */
 export const adminSuspendTeacherCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
@@ -134,7 +134,7 @@ export const adminSuspendTeacherCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin unsuspend teacher controller
  *@Route PUT /api/v1/admins/unsuspend/teacher/:id
- *@access
+ *@access Private - Admin Only
  */
 export const adminUnsuspendTeacherCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
@@ -145,7 +145,7 @@ export const adminUnsuspendTeacherCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin withdraw teacher controller
  *@Route PUT /api/v1/admins/withdraw/teacher/:id
- *@access
+ *@access Private - Admin Only
  */
 export const adminWithdrawTeacherCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
@@ -156,7 +156,7 @@ export const adminWithdrawTeacherCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin withdraw teacher controller
  *@Route PUT /api/v1/admins/unwithdraw/teacher/:id
- *@access
+ *@access Private - Admin Only
  */
 export const adminUnwithdrawTeacherCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
@@ -167,7 +167,7 @@ export const adminUnwithdrawTeacherCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin publish exam controller
  *@Route PUT /api/v1/admins/publish/exam/:id
- *@access
+ *@access Private - Admin Only
  */
 export const adminPublishExamCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
@@ -178,7 +178,7 @@ export const adminPublishExamCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Admin unpublish exam controller
  *@Route PUT /api/v1/admins/unpublish/exam/:id
- *@access
+ *@access Private - Admin Only
  */
 export const adminUnpublishExamCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
@@ -189,7 +189,7 @@ export const adminUnpublishExamCtrl = asyncHandler(async (req, res) => {
 /**
  *@description Delete admin
  *@Route DELETE /api/v1/admins/delete/:id
- *@access
+ *@access Private - Admin Only
  */
 export const deleteAdminCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
