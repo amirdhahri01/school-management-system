@@ -1,5 +1,5 @@
 import express from "express";
-import isLogin from "../../middlewares/isLogIn.js";
+import isLogin from "../../middlewares/isLogin.js";
 import {
   createYearGroupCtrl,
   getYearGroupsCtrl,

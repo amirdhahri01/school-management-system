@@ -13,7 +13,7 @@ import {
   registerAdminCtrl,
   updateAdminCtrl,
 } from "../../controllers/Staff/adminCtrl.js";
-import isLogin from "../../middlewares/isLogIn.js";
+import isLogin from "../../middlewares/isLogin.js";
 import isAdmin from "../../middlewares/isAdmin.js";
 
 const adminRoutes = express.Router();

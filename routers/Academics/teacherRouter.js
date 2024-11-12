@@ -1,5 +1,5 @@
 import express from "express";
-import isLogin from "../../middlewares/isLogIn.js";
+import isLogin from "../../middlewares/isLogin.js";
 import isAdmin from "../../middlewares/isAdmin.js";
 import { adminRegisterTeacher, loginTeacherCtrl } from "../../controllers/Staff/teacherCtrl.js";
 
