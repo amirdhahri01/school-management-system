@@ -7,11 +7,12 @@ import {
 } from "../middlewares/globalErrorHandler.js";
 import academicYearRoutes from "../routers/Academics/academicYearRouter.js";
 import academicTermRoutes from "../routers/Academics/academicTermRouter.js";
-import ClassLevelRoutes from "../routers/Academics/classLevelRouter.js";
-import ProgramRoutes from "../routers/Academics/programRouter.js";
-import SubjectRoutes from "../routers/Academics/subjectRouter.js";
-import YearGroupRoutes from "../routers/Academics/yearGroupRouter.js";
+import classLevelRoutes from "../routers/Academics/classLevelRouter.js";
+import programRoutes from "../routers/Academics/programRouter.js";
+import subjectRoutes from "../routers/Academics/subjectRouter.js";
+import yearGroupRoutes from "../routers/Academics/yearGroupRouter.js";
 import teacherRoutes from "../routers/Staff/teacherRouter.js";
+import examRoutes from "../routers/Academics/examRouter.js";
 
 const app = express();
 //====Middleware====
@@ -21,11 +22,12 @@ app.use(express.json());
 app.use("/api/v1/admins/", adminRoutes);
 app.use("/api/v1/academic-years/", academicYearRoutes);
 app.use("/api/v1/academic-terms/", academicTermRoutes);
-app.use("/api/v1/class-levels/", ClassLevelRoutes);
-app.use("/api/v1/programs/", ProgramRoutes);
-app.use("/api/v1/subjects/", SubjectRoutes);
-app.use("/api/v1/year-groups/", YearGroupRoutes);
+app.use("/api/v1/class-levels/", classLevelRoutes);
+app.use("/api/v1/programs/", programRoutes);
+app.use("/api/v1/subjects/", subjectRoutes);
+app.use("/api/v1/year-groups/", yearGroupRoutes);
 app.use("/api/v1/teachers/", teacherRoutes);
+app.use("/api/v1/exams/", examRoutes);
 app.use(notFound);
 app.use(globalErrorHandler);
 export default app;

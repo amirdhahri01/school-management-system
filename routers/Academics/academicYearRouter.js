@@ -15,7 +15,7 @@ academicYearRoutes
   .post(isLogin, createAcademicYearCtrl);
 
 academicYearRoutes
-  .route("/:id") 
+  .route("/:id")
   .get(isLogin, getAcademicYearCtrl)
   .put(isLogin, updateAcademicYearCtrl)
   .delete(isLogin, deleteAcademicYearCtrl);

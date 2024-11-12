@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
-const Schema = Schema;
+const Schema = mongoose.Schema;
 
-//examSchema
 const examSchema = new Schema(
   {
     name: {

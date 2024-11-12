@@ -8,14 +8,16 @@ import {
   deleteClassLevelCtrl,
 } from "../../controllers/Academics/classLevelCtrl.js";
 
-const ClassLevelRoutes = express.Router();
-ClassLevelRoutes.route("/")
+const classLevelRoutes = express.Router();
+classLevelRoutes
+  .route("/")
   .get(isLogin, getClassLevelsCtrl)
   .post(isLogin, createClassLevelCtrl);
 
-ClassLevelRoutes.route("/:id")
+classLevelRoutes
+  .route("/:id")
   .get(isLogin, getClassLevelCtrl)
   .put(isLogin, updateClassLevelCtrl)
   .delete(isLogin, deleteClassLevelCtrl);
 
-export default ClassLevelRoutes;
+export default classLevelRoutes;

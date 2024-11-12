@@ -8,14 +8,14 @@ import {
   deleteYearGroupCtrl,
 } from "../../controllers/Academics/yearGroupCtrl.js";
 
-const YearGroupRoutes = express.Router();
-YearGroupRoutes.route("/")
+const yearGroupRoutes = express.Router();
+yearGroupRoutes.route("/")
   .get(isLogin, getYearGroupsCtrl)
   .post(isLogin, createYearGroupCtrl);
 
-YearGroupRoutes.route("/:id")
+yearGroupRoutes.route("/:id")
   .get(isLogin, getYearGroupCtrl)
   .put(isLogin, updateYearGroupCtrl)
   .delete(isLogin, deleteYearGroupCtrl);
 
-export default YearGroupRoutes;
+export default yearGroupRoutes;

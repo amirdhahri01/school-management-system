@@ -8,14 +8,14 @@ import {
   deleteProgramCtrl,
 } from "../../controllers/Academics/programCtrl.js";
 
-const ProgramRoutes = express.Router();
-ProgramRoutes.route("/")
+const programRoutes = express.Router();
+programRoutes.route("/")
   .get(isLogin, getProgramsCtrl)
   .post(isLogin, createProgramCtrl);
 
-ProgramRoutes.route("/:id")
+programRoutes.route("/:id")
   .get(isLogin, getProgramCtrl)
   .put(isLogin, updateProgramCtrl)
   .delete(isLogin, deleteProgramCtrl);
 
-export default ProgramRoutes;
+export default programRoutes;

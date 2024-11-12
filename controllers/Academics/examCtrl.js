@@ -18,7 +18,6 @@ export const createExamCtrl = asyncHandler(async (req, res) => {
     examDate,
     examTime,
     examType,
-    createdBy,
     academicYear,
   } = req.body;
   const teacherFound = await Teacher.findById(req.userAuth?._id);
@@ -39,8 +38,8 @@ export const createExamCtrl = asyncHandler(async (req, res) => {
     examDate,
     examTime,
     examType,
-    createdBy,
     academicYear,
+    createdBy: req.userAuth?._id,
   });
   teacherFound.examsCreated.push(exam?._id);
   await exam.save();

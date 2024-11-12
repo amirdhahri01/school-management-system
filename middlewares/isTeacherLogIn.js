@@ -1,7 +1,7 @@
 import Teacher from "../models/Staff/Teacher.js";
 import verifyToken from "../utils/verifyToken.js";
 
-const isLogin = async (req, res, next) => {
+const isTeacherLogin = async (req, res, next) => {
   const token = req?.headers?.authorization?.split(" ")[1];
   
   const verifiedToken = verifyToken(token);
@@ -13,4 +13,4 @@ const isLogin = async (req, res, next) => {
   next();
 };
 
-export default isLogin;
+export default isTeacherLogin;

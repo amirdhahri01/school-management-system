@@ -9,13 +9,13 @@ import {
 } from "../../controllers/Academics/subjectCtrl.js";
 import isAdmin from "../../middlewares/isAdmin.js";
 
-const SubjectRoutes = express.Router();
+const subjectRoutes = express.Router();
 
-SubjectRoutes.get("/", isLogin, isAdmin, getSubjectsCtrl);
-SubjectRoutes.post("/:programID", isLogin, createSubjectCtrl);
-SubjectRoutes.route("/:id")
+subjectRoutes.get("/", isLogin, isAdmin, getSubjectsCtrl);
+subjectRoutes.post("/:programID", isLogin, createSubjectCtrl);
+subjectRoutes.route("/:id")
   .get(isLogin, isAdmin, getSubjectCtrl)
   .put(isLogin, isAdmin, updateSubjectCtrl)
   .delete(isLogin, isAdmin, deleteSubjectCtrl);
 
-export default SubjectRoutes;
+export default subjectRoutes;
