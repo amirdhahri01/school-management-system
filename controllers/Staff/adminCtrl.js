@@ -102,10 +102,13 @@ export const updateAdminCtrl = asyncHandler(async (req, res) => {
   if (emailExists) {
     throw new Error("This email is taken/exists");
   }
-  const hasedPassword = hashPassword(password);
+  const hashedPassword = "";
+  if (password) {
+    hashedPassword = await hashPassword(password);
+  }
   const admin = await Admin.findByIdAndUpdate(
     req.userAuth._id,
-    { email, name, password: hasedPassword },
+    { email, name, password: hashedPassword },
     { new: true, runValidators: true }
   );
   res.status(200).json({
