@@ -73,7 +73,7 @@ export const updateProgramCtrl = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
   const programFound = await Program.findById(id);
   if (!programFound) {
-    throw new Error("Class level doesn't exists");
+    throw new Error("Program doesn't exists");
   }
   const program = await Program.findByIdAndUpdate(
     id,
