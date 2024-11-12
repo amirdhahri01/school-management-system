@@ -13,6 +13,7 @@ import subjectRoutes from "../routers/Academics/subjectRouter.js";
 import yearGroupRoutes from "../routers/Academics/yearGroupRouter.js";
 import teacherRoutes from "../routers/Staff/teacherRouter.js";
 import examRoutes from "../routers/Academics/examRouter.js";
+import studentRoutes from "../routers/Students/studentRouter.js";
 
 const app = express();
 //====Middleware====
@@ -28,6 +29,7 @@ app.use("/api/v1/subjects/", subjectRoutes);
 app.use("/api/v1/year-groups/", yearGroupRoutes);
 app.use("/api/v1/teachers/", teacherRoutes);
 app.use("/api/v1/exams/", examRoutes);
+app.use("/api/v1/students/", studentRoutes);
 app.use(notFound);
 app.use(globalErrorHandler);
 export default app;

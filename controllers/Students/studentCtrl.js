@@ -2,29 +2,30 @@ import asyncHandler from "express-async-handler";
 import Teacher from "../../models/Staff/Teacher.js";
 import { hashPassword, isPasswordMatch } from "../../utils/helpers.js";
 import generateToken from "../../utils/generateToken.js";
+import Student from "../../models/Staff/Student.js";
 
 /**
- *@description Admin register teacher controller
- *@Route POST /api/v1/teachers/admin/register
+ *@description Admin register student controller
+ *@Route POST /api/v1/students/admin/register
  *@access Private
  */
-export const adminRegisterTeacherCtrl = asyncHandler(async (req, res) => {
+export const adminRegisterStudentCtrl = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  const teacherFound = await Teacher.findOne({ email });
-  if (teacherFound) {
-    throw new Error("Teacher already exists");
+  const studentFound = await Student.findOne({ email });
+  if (studentFound) {
+    throw new Error("Student already exists");
   }
   const hasedPassword = await hashPassword(password);
-  const teacher = await Teacher.create({
+  const student = await Student.create({
     name,
     email,
     password: hasedPassword,
   });
   res.status(201).json({
     status: "Success",
-    message: "Teacher registered successfully",
+    message: "Student registered successfully",
     data: {
-      teacher,
+      student,
     },
   });
 });
