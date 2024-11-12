@@ -1,18 +1,24 @@
 import express from "express";
 import isLogin from "../../middlewares/isLogin.js";
-import { createExamCtrl } from "../../controllers/Academics/examCtrl.js";
+import {
+  createExamCtrl,
+  getExamCtrl,
+  getExamsCtrl,
+  updateExamCtrl,
+} from "../../controllers/Academics/examCtrl.js";
 import isTeacherLogin from "../../middlewares/isTeacherLogIn.js";
 import isTeacher from "../../middlewares/isTeacher.js";
 
 const examRoutes = express.Router();
 examRoutes
   .route("/")
-  //   .get(isLogin, getClassLevelsCtrl)
+  .get(isTeacherLogin, isTeacher, getExamsCtrl)
   .post(isTeacherLogin, isTeacher, createExamCtrl);
 
-// ClassLevelRoutes.route("/:id")
-//   .get(isLogin, getClassLevelCtrl)
-//   .put(isLogin, updateClassLevelCtrl)
+examRoutes
+  .route("/:examID")
+  .get(isTeacherLogin, isTeacher, getExamCtrl)
+  .put(isTeacherLogin, isTeacher, updateExamCtrl);
 //   .delete(isLogin, deleteClassLevelCtrl);
 
 export default examRoutes;
