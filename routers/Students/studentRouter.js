@@ -37,5 +37,4 @@ studentRoutes.put(
   isAdmin,
   adminUpdateStudentProfileCtrl
 );
-
 export default studentRoutes;
