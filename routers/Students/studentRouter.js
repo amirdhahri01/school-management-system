@@ -8,6 +8,7 @@ import {
   getStudentProfileCtrl,
   getStudentsCtrl,
   loginStudentCtrl,
+  studentWriteExamCtrl,
   updateStudentProfileCtrl,
 } from "../../controllers/Students/studentCtrl.js";
 import isStudentLogin from "../../middlewares/isStudentLogIn.js";
@@ -22,6 +23,12 @@ studentRoutes.post(
   adminRegisterStudentCtrl
 );
 studentRoutes.post("/login", loginStudentCtrl);
+studentRoutes.post(
+  "/exams/:examID/write",
+  isStudentLogin,
+  isStudent,
+  studentWriteExamCtrl
+);
 studentRoutes.get("/admin", isLogin, isAdmin, getStudentsCtrl);
 studentRoutes.get("/admin/:studentID", isLogin, isAdmin, getStudentCtrl);
 studentRoutes.get("/profile", isStudentLogin, isStudent, getStudentProfileCtrl);

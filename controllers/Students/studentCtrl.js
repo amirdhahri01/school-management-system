@@ -3,6 +3,8 @@ import Teacher from "../../models/Staff/Teacher.js";
 import { hashPassword, isPasswordMatch } from "../../utils/helpers.js";
 import generateToken from "../../utils/generateToken.js";
 import Student from "../../models/Staff/Student.js";
+import Exam from "../../models/Academic/Exam.js";
+import ExamResult from "../../models/Academic/ExamResults.js";
 
 /**
  *@description Admin register student controller
@@ -167,6 +169,102 @@ export const adminUpdateStudentProfileCtrl = asyncHandler(async (req, res) => {
     message: "Student profile updated successfully",
     data: {
       student,
+    },
+  });
+});
+
+/**
+ *@description Student taking exams controller
+ *@Route POST /api/v1/students/exams/:examID/write
+ *@access Private - Student Only
+ */
+
+export const studentWriteExamCtrl = asyncHandler(async (req, res) => {
+  const studentFound = await Student.findById(req.userAuth?._id);
+  if (!studentFound) {
+    throw new Error("Student not found");
+  }
+  const { examID } = req.params;
+  const examFound = await Exam.findById(examID);
+  if (!examFound) {
+    throw new Error("Exam not found");
+  }
+  const questions = examFound.questions;
+  const studentAnswers = req.body.answers;
+  if (studentAnswers.length !== questions.length) {
+    throw new Error("You have not answered all the questions");
+  }
+  const examResultFound = await ExamResult.findById({
+    student: studentFound?._id,
+  });
+  if (examResultFound) {
+    throw new Error("You have already witten this exam");
+  }
+  //Build the report object
+  let correctAnswers = 0;
+  let wrongAnswers = 0;
+  let totalQuestions = questions.length;
+  let score = 0;
+  for (let i = 0; i < questions.length; i++) {
+    const question = questions[i];
+    if (question.correctAnswer === studentAnswers[i]) {
+      correctAnswers++;
+      score++;
+      question.isCorrect = true;
+    } else {
+      wrongAnswers++;
+    }
+  }
+  let grade = (correctAnswers / totalQuestions) * 100;
+  let answeredQuestions = questions.map((question) => {
+    return {
+      question: question.question,
+      correctAnswer: question.correctAnswer,
+      isCorrect: question.isCorrect,
+    };
+  });
+  let status = "";
+  if (grade >= 50) {
+    status = "Passed";
+  } else {
+    status = "Failed";
+  }
+  let remarks = "";
+  if (grade >= 80) {
+    remarks = "Excellent";
+  } else if (grade >= 70) {
+    remarks = "Very Good";
+  } else if (grade >= 60) {
+    remarks = "Good";
+  } else if (grade >= 50) {
+    remarks = "Fair";
+  } else {
+    remarks = "Poor";
+  }
+  const examResult = await ExamResult.create({
+    student: studentFound?._id,
+    exam: examFound?._id,
+    grade,
+    score,
+    status,
+    remarks,
+    classLevels: examFound?.classLevel,
+    academicTerm: examFound?.academicTerm,
+    academicYear: examFound?.academicYear,
+  });
+  studentFound.examResults.push(examResult?._id);
+  studentFound.save();
+  res.status(200).json({
+    status: "Success",
+    message: "Student write exam successfully",
+    data: {
+      status,
+      correctAnswers,
+      wrongAnswers,
+      score,
+      grade,
+      answeredQuestions,
+      remarks,
     },
   });
 });

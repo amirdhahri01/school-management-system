@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
-const Schema = Schema;
+const Schema = mongoose.Schema;
 
-//exam result schema
 const examResultSchema = new Schema(
   {
     student: {
@@ -32,14 +31,14 @@ const examResultSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ["failed", "passed"],
-      default: "failed",
+      enum: ["Failed", "Passed"],
+      default: "Failed",
     },
     //Excellent/Good/Poor
     remarks: {
       type: String,
       required: true,
-      enum: ["Excellent", "Good", "Poor"],
+      enum: ["Excellent", "Very Good","Good", "Poor"],
       default: "Poor",
     },
     position: {
