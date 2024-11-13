@@ -61,7 +61,7 @@ export const createExamCtrl = asyncHandler(async (req, res) => {
  *@access Private
  */
 export const getExamsCtrl = asyncHandler(async (req, res) => {
-  const exams = await Exam.find();
+  const exams = await Exam.find().populate("questions");
   res.status(200).send({
     status: "Success",
     message: "Exams fetched successfully",

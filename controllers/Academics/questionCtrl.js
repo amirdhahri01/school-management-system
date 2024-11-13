@@ -8,7 +8,7 @@ import Question from "../../models/Academic/Questions.js";
  *@access Private - Teachers Only
  */
 export const createQuestionCtrl = asyncHandler(async (req, res) => {
-  const { question, opationA, opationB, opationC, opationD, correctAnswer } =
+  const { question, optionA, optionB, optionC, optionD, correctAnswer } =
     req.body;
   const { examID } = req.params;
   const examFound = await Exam.findById(examID);
@@ -20,10 +20,11 @@ export const createQuestionCtrl = asyncHandler(async (req, res) => {
     throw new Error("Question already exists");
   }
   const questionCreated = new Question({
-    opationA,
-    opationB,
-    opationC,
-    opationD,
+    question,
+    optionA,
+    optionB,
+    optionC,
+    optionD,
     correctAnswer,
     createdBy: req.userAuth?._id,
   });
@@ -40,89 +41,90 @@ export const createQuestionCtrl = asyncHandler(async (req, res) => {
 });
 
 /**
- *@description Fetch exams controller
- *@Route GET /api/v1/exams
- *@access Private
+ *@description Fetch questions controller
+ *@Route GET /api/v1/questions
+ *@access Private - Teachers Only
  */
-export const getExamsCtrl = asyncHandler(async (req, res) => {
-  const exams = await Exam.find();
+export const getQuestionsCtrl = asyncHandler(async (req, res) => {
+  const questions = await Question.find();
   res.status(200).send({
     status: "Success",
-    message: "Exams fetched successfully",
+    message: "Questions fetched successfully",
     data: {
-      exams,
+      questions,
     },
   });
 });
 
 /**
- *@description Fetch exam controller
- *@Route GET /api/v1/exams/:examID
- *@access Private
+ *@description Fetch question controller
+ *@Route GET /api/v1/questions/:questionID
+ *@access Private - Teachers Only
  */
-export const getExamCtrl = asyncHandler(async (req, res) => {
-  const { examID } = req.params;
-  const exam = await Exam.findById(examID);
+export const getQuestionCtrl = asyncHandler(async (req, res) => {
+  const { questionID } = req.params;
+  const question = await Question.findById(questionID);
   res.status(200).send({
     status: "Success",
-    message: "Exam fetched successfully",
+    message: "Question fetched successfully",
     data: {
-      exam,
+      question,
     },
   });
 });
 
 /**
- *@description Update exam controller
- *@Route PUT /api/v1/exams/:examID
+ *@description Update question controller
+ *@Route PUT /api/v1/questions/:questionID
  *@access Private - Teacher Only
  */
-export const updateExamCtrl = asyncHandler(async (req, res) => {
-  const { examID } = req.params;
-  const {
-    name,
-    description,
-    subject,
-    program,
-    academicTerm,
-    duration,
-    examDate,
-    examTime,
-    examType,
-    academicYear,
-    classLevel,
-  } = req.body;
-  const examFound = await Exam.findById(examID);
-  if (!examFound) {
-    throw new Error("Exam doesn't exists");
+export const updateQuestionCtrl = asyncHandler(async (req, res) => {
+  const { questionID } = req.params;
+  const { question, optionA, optionB, optionC, optionD, correctAnswer } =
+    req.body;
+  const questionFound = await Question.findById(questionID);
+  if (!questionFound) {
+    throw new Error("Question doesn't exists");
   }
-  const examExists = await Exam.findOne({ name });
-  if (examExists) {
-    throw new Error("Exam already exists");
+  const questionExists = await Question.findOne({ question });
+  if (questionExists) {
+    throw new Error("Question already exists");
   }
-  const exam = await Exam.findByIdAndUpdate(
-    examID,
+  const questionUpdated = await Question.findByIdAndUpdate(
+    questionID,
     {
-      name,
-      description,
-      subject,
-      program,
-      academicTerm,
-      duration,
-      examDate,
-      examTime,
-      examType,
-      academicYear,
-      classLevel,
+      question,
+      optionA,
+      optionB,
+      optionC,
+      optionD,
+      correctAnswer,
       createdBy: req.userAuth?._id,
     },
     { new: true }
   );
   res.status(200).send({
     status: "Success",
-    message: "Exam updated successfully",
+    message: "Question updated successfully",
     data: {
-      exam,
+      question: questionUpdated,
+    },
+  });
+});
+
+/**
+ *@description Delete question controller
+ *@Route Delete /api/v1/questions/:questionID
+ *@access Private - Teachers Only
+ */
+export const deleteQuestionCtrl = asyncHandler(async (req, res) => {
+  const { questionID } = req.params;
+  const question = await Question.findByIdAndDelete(questionID);
+  res.status(200).send({
+    status: "Success",
+    message: "Question Deleted successfully",
+    data: {
+      question,
     },
   });
 });
