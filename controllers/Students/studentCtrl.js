@@ -202,6 +202,9 @@ export const studentWriteExamCtrl = asyncHandler(async (req, res) => {
   if (examResultFound) {
     throw new Error("You have already witten this exam");
   }
+  if(studentFound.isSuspended || studentFound.isWithdrawn){
+    throw new Error("You are suspended/withdrawn, you can't this exam");
+  }
   //Build the report object
   let correctAnswers = 0;
   let wrongAnswers = 0;
