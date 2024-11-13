@@ -1,5 +1,4 @@
 import express from "express";
-import isLogin from "../../middlewares/isLogin.js";
 import {
   createExamCtrl,
   getExamCtrl,
