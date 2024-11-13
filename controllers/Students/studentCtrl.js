@@ -185,7 +185,9 @@ export const studentWriteExamCtrl = asyncHandler(async (req, res) => {
     throw new Error("Student not found");
   }
   const { examID } = req.params;
-  const examFound = await Exam.findById(examID);
+  const examFound = await Exam.findById(examID)
+    .populate("questions")
+    .populate("academicTerm");
   if (!examFound) {
     throw new Error("Exam not found");
   }
@@ -253,7 +255,43 @@ export const studentWriteExamCtrl = asyncHandler(async (req, res) => {
     academicYear: examFound?.academicYear,
   });
   studentFound.examResults.push(examResult?._id);
-  studentFound.save();
+  await studentFound.save();
+  if (
+    examFound.academicTerm.name === "3rd term" &&
+    status === "Passed" &&
+    studentFound.currentClassLevel === "Level 100"
+  ) {
+    studentFound.classLevels.push("Level 200");
+    studentFound.currentClassLevel = "Level 200";
+    await studentFound.save();
+  }
+  if (
+    examFound.academicTerm.name === "3rd term" &&
+    status === "Passed" &&
+    studentFound.currentClassLevel === "Level 200"
+  ) {
+    studentFound.classLevels.push("Level 300");
+    studentFound.currentClassLevel = "Level 300";
+    await studentFound.save();
+  }
+  if (
+    examFound.academicTerm.name === "3rd term" &&
+    status === "Passed" &&
+    studentFound.currentClassLevel === "Level 300"
+  ) {
+    studentFound.classLevels.push("Level 400");
+    studentFound.currentClassLevel = "Level 400";
+    await studentFound.save();
+  }
+  if (
+    examFound.academicTerm.name === "3rd term" &&
+    status === "Passed" &&
+    studentFound.currentClassLevel === "Level 400"
+  ) {
+    studentFound.isGraduated = true;
+    studentFound.yearGraduated = new Date.now();
+    await studentFound.save();
+  }
   res.status(200).json({
     status: "Success",
     message: "Student write exam successfully",

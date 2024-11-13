@@ -26,7 +26,7 @@ const studentSchema = new Schema(
           Date.now().toString().slice(2, 4) +
           this.name
             .split(" ")
-            .map(name => name[0])
+            .map((name) => name[0])
             .join("")
             .toUpperCase()
         );
@@ -40,8 +40,7 @@ const studentSchema = new Schema(
     //keep track of the class level the student is in
     classLevels: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "ClassLevel",
+        type: String,
       },
     ],
     currentClassLevel: {
@@ -123,4 +122,4 @@ const studentSchema = new Schema(
 //model
 const Student = mongoose.model("Student", studentSchema);
 
-export default Student
+export default Student;
