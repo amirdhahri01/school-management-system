@@ -16,7 +16,10 @@ export const checkExamResultsCtrl = asyncHandler(async (req, res) => {
   const examResults = await ExamResult.findOne({
     studentID: studentFound.studentId,
     _id: examResultID,
-  });
+  })
+    .populate("classLevel")
+    .populate("academicTerm")
+    .populate("academicYear");
   if (!examResults?.isPublished) {
     throw new Error("Exam result is not available, check out later");
   }
