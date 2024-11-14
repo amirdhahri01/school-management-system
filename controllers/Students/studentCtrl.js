@@ -248,7 +248,7 @@ export const studentWriteExamCtrl = asyncHandler(async (req, res) => {
     remarks = "Poor";
   }
   const examResult = await ExamResult.create({
-    student: studentFound?._id,
+    studentID: studentFound?.studentId,
     exam: examFound?._id,
     grade,
     score,
