@@ -15,6 +15,7 @@ import teacherRoutes from "../routers/Staff/teacherRouter.js";
 import examRoutes from "../routers/Academics/examRouter.js";
 import studentRoutes from "../routers/Students/studentRouter.js";
 import questionRoutes from "../routers/Academics/questionRouter.js";
+import examResultsRoutes from "../routers/Academics/examResultsRouter.js";
 
 const app = express();
 //====Middleware====
@@ -32,6 +33,9 @@ app.use("/api/v1/teachers/", teacherRoutes);
 app.use("/api/v1/exams/", examRoutes);
 app.use("/api/v1/students/", studentRoutes);
 app.use("/api/v1/questions/", questionRoutes);
+app.use("/api/v1/exam-results/", examResultsRoutes);
+
 app.use(notFound);
 app.use(globalErrorHandler);
+
 export default app;

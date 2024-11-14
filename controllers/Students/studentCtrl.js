@@ -196,13 +196,14 @@ export const studentWriteExamCtrl = asyncHandler(async (req, res) => {
   if (studentAnswers.length !== questions.length) {
     throw new Error("You have not answered all the questions");
   }
-  const examResultFound = await ExamResult.findById({
+  const examResultFound = await ExamResult.findOne({
     student: studentFound?._id,
   });
+
   if (examResultFound) {
     throw new Error("You have already witten this exam");
   }
-  if(studentFound.isSuspended || studentFound.isWithdrawn){
+  if (studentFound.isSuspended || studentFound.isWithdrawn) {
     throw new Error("You are suspended/withdrawn, you can't this exam");
   }
   //Build the report object
