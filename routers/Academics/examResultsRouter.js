@@ -9,7 +9,7 @@ import {
 const examResultsRoutes = express.Router();
 examResultsRoutes.route("/").get(isStudentLogin, isStudent, getExamResultsCtrl);
 examResultsRoutes
-  .route("/:examID/checking")
+  .route("/:examResultID/checking")
   .get(isStudentLogin, isStudent, checkExamResultsCtrl);
 
 export default examResultsRoutes;
