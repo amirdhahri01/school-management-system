@@ -30,7 +30,9 @@ export const getAdminProfileCtrl = asyncHandler(async (req, res) => {
     .populate("academicYears")
     .populate("academicTerms")
     .populate("classLevels")
-    .populate("programs");
+    .populate("programs")
+    .populate("yearGroups")
+    .populate("teachers");
   if (!admin) {
     throw new Error("Admin not found");
   }

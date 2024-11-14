@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import Teacher from "../../models/Staff/Teacher.js";
 import { hashPassword, isPasswordMatch } from "../../utils/helpers.js";
 import generateToken from "../../utils/generateToken.js";
+import Admin from "../../models/Staff/Admin.js";
 
 /**
  *@description Admin register teacher controller
@@ -10,6 +11,10 @@ import generateToken from "../../utils/generateToken.js";
  */
 export const adminRegisterTeacherCtrl = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
+  const adminFound = await Admin.findById(req.userAuth._id);
+  if (!adminFound) {
+    throw new Error("Admin doesn't exists");
+  }
   const teacherFound = await Teacher.findOne({ email });
   if (teacherFound) {
     throw new Error("Teacher already exists");
@@ -20,6 +25,8 @@ export const adminRegisterTeacherCtrl = asyncHandler(async (req, res) => {
     email,
     password: hasedPassword,
   });
+  adminFound.teachers.push(teacher._id);
+  await adminFound.save();
   res.status(201).json({
     status: "Success",
     message: "Teacher registered successfully",

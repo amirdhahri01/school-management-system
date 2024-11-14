@@ -19,7 +19,8 @@ export const checkExamResultsCtrl = asyncHandler(async (req, res) => {
   })
     .populate("classLevel")
     .populate("academicTerm")
-    .populate("academicYear");
+    .populate("academicYear")
+    .populate("answeredQuestions");
   if (!examResults?.isPublished) {
     throw new Error("Exam result is not available, check out later");
   }
@@ -38,7 +39,7 @@ export const checkExamResultsCtrl = asyncHandler(async (req, res) => {
  *@access Private - Student Only
  */
 export const getExamResultsCtrl = asyncHandler(async (req, res) => {
-  const examResults = await ExamResult.find();
+  const examResults = await ExamResult.find().select("exam").populate("exam");
   res.json({
     status: "Success",
     message: "Exam results fetchead successfully",
@@ -47,3 +48,31 @@ export const getExamResultsCtrl = asyncHandler(async (req, res) => {
     },
   });
 });
+
+/**
+ *@description Admin publish exam results controller
+ *@Route PUT /api/v1/exam-results/:examResultID/admin-publish
+ *@access Private - Admin Only
+ */
+export const adminTogglePublishExamResultsCtrl = asyncHandler(
+  async (req, res) => {
+    const { examResultID } = req.params;
+    const examResults = await ExamResult.findById(examResultID);
+    if (!examResults) {
+      throw new Error("Exam results doesn't exists");
+    }
+    const { publish } = req.body;
+    const publishResult = await ExamResult.findByIdAndUpdate(
+      examResultID,
+      { isPublished: publish },
+      { new: true }
+    );
+    res.json({
+      status: "Success",
+      message: "Exam results updated successfully",
+      data: {
+        examResults: publishResult,
+      },
+    });
+  }
+);

@@ -96,17 +96,32 @@ export const getStudentCtrl = asyncHandler(async (req, res) => {
  *@access Private - Student Only
  */
 export const getStudentProfileCtrl = asyncHandler(async (req, res) => {
-  const studentProfile = await Student.findById(req.userAuth?._id).select(
-    "-password -createdAt -updatedAt"
-  );
-  if (!studentProfile) {
+  const student = await Student.findById(req.userAuth?._id)
+    .select("-password -createdAt -updatedAt")
+    .populate("examResults");
+  if (!student) {
     throw new Error("Student doesn't exists");
   }
+  const studentProfile = {
+    name: student.name,
+    email: student.email,
+    currentClassLevel: student.currentClassLevel,
+    program: student.program,
+    dateAdmitted: student.dateAdmitted,
+    isSuspended: student.isSuspended,
+    isWithdrawn: student.isWithdrawn,
+    studentID: student.studentId,
+    prefectName: student.prefectName,
+  };
+  const examResults = student.examResults;
+  const currentExamResult = examResults[examResults.length - 1];
+  const isPublished = currentExamResult?.isPublished;
   res.status(200).json({
     status: "Success",
     message: "Student profile fetched sucessfully",
     data: {
       studentProfile,
+      currentExamResult: isPublished ? currentExamResult : [],
     },
   });
 });
@@ -257,6 +272,7 @@ export const studentWriteExamCtrl = asyncHandler(async (req, res) => {
     classLevels: examFound?.classLevel,
     academicTerm: examFound?.academicTerm,
     academicYear: examFound?.academicYear,
+    answeredQuestions: answeredQuestions,
   });
   studentFound.examResults.push(examResult?._id);
   await studentFound.save();
