@@ -7,15 +7,17 @@ import {
   updateSubjectCtrl,
   deleteSubjectCtrl,
 } from "../../controllers/Academics/subjectCtrl.js";
-import isAdmin from "../../middlewares/isAdmin.js";
+import isAuthenticated from "../../middlewares/isAuthenticated.js";
+import roleRestriction from "../../middlewares/roleRestriction.js";
+import Admin from "../../models/Staff/Admin.js";
 
 const subjectRoutes = express.Router();
 
-subjectRoutes.get("/", isLogin, isAdmin, getSubjectsCtrl);
+subjectRoutes.get("/", isAuthenticated(Admin), roleRestriction("admin"), getSubjectsCtrl);
 subjectRoutes.post("/:programID", isLogin, createSubjectCtrl);
 subjectRoutes.route("/:id")
-  .get(isLogin, isAdmin, getSubjectCtrl)
-  .put(isLogin, isAdmin, updateSubjectCtrl)
-  .delete(isLogin, isAdmin, deleteSubjectCtrl);
+  .get(isAuthenticated(Admin), roleRestriction("admin"), getSubjectCtrl)
+  .put(isAuthenticated(Admin), roleRestriction("admin"), updateSubjectCtrl)
+  .delete(isAuthenticated(Admin), roleRestriction("admin"), deleteSubjectCtrl);
 
 export default subjectRoutes;

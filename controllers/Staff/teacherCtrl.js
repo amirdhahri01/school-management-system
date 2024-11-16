@@ -68,40 +68,12 @@ export const loginTeacherCtrl = asyncHandler(async (req, res) => {
  *@access Private - Admin Only
  */
 export const getTeachersCtrl = asyncHandler(async (req, res) => {
-  teachersQuery = Teacher.find();
-  const name = req.query.name;
-  const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 2;
-  const skip = (page - 1) * limit;
-  const total = await Teacher.countDocuments();
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-  const pagination = {}
-  if (endIndex < total) {
-    pagination.next = {
-      page: page + 1,
-      limit
-    }
-  }
-  if (startIndex > 0) {
-    pagination.prev = {
-      page: page - 1,
-      limit
-    }
-  }
-  if (name) {
-    teachersQuery = Teacher.find({
-      name: { $regex: name, $options: "i" }
-    });
-  }
-  const teachers = await teachersQuery.find().skip(skip).limit(limit);
+  const teachers = res.results;
   res.status(200).json({
     status: "Success",
     message: "Teachers fetched sucessfully",
     data: {
-      total,
-      pagination,
-      teachers,
+      teachers
     },
   });
 });

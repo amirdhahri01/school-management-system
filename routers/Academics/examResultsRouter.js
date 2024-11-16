@@ -1,26 +1,24 @@
 import express from "express";
-import isStudentLogin from "../../middlewares/isStudentLogIn.js";
-import isStudent from "../../middlewares/isStudent.js";
 import {
   adminTogglePublishExamResultsCtrl,
   checkExamResultsCtrl,
   getExamResultsCtrl,
 } from "../../controllers/Academics/examResultsCtrl.js";
-import isLogin from "../../middlewares/isLogin.js";
-import isAdmin from "../../middlewares/isAdmin.js";
+import roleRestriction from "../../middlewares/roleRestriction.js";
+import isAuthenticated from "../../middlewares/isAuthenticated.js";
+import Student from "../../models/Staff/Student.js";
+import Admin from "../../models/Staff/Admin.js";
 
 const examResultsRoutes = express.Router();
-examResultsRoutes.get("/", isStudentLogin, isStudent, getExamResultsCtrl);
+examResultsRoutes.get("/", isAuthenticated(Student), roleRestriction("student"), getExamResultsCtrl);
 examResultsRoutes.get(
   "/:examResultID/checking",
-  isStudentLogin,
-  isStudent,
+  isAuthenticated(Student), roleRestriction("student"),
   checkExamResultsCtrl
 );
 examResultsRoutes.put(
   "/:examResultID/admin-publish",
-  isLogin,
-  isAdmin,
+  isAuthenticated(Admin), roleRestriction("admin"),
   adminTogglePublishExamResultsCtrl
 );
 export default examResultsRoutes;

@@ -1,5 +1,4 @@
 import express from "express";
-import isLogin from "../../middlewares/isLogin.js";
 import {
   createAcademicTermCtrl,
   getAcademicsTermsCtrl,
@@ -7,17 +6,20 @@ import {
   updateAcademicTermCtrl,
   deleteAcademicTermCtrl,
 } from "../../controllers/Academics/academicTermCtrl.js";
+import roleRestriction from "../../middlewares/roleRestriction.js";
+import Admin from "../../models/Staff/Admin.js";
+import isAuthenticated from "../../middlewares/isAuthenticated.js";
 
 const academicTermRoutes = express.Router();
 academicTermRoutes
   .route("/")
-  .get(isLogin, getAcademicsTermsCtrl)
-  .post(isLogin, createAcademicTermCtrl);
+  .get(isAuthenticated(Admin), roleRestriction("admin"), getAcademicsTermsCtrl)
+  .post(isAuthenticated(Admin), roleRestriction("admin"), createAcademicTermCtrl);
 
 academicTermRoutes
   .route("/:id")
-  .get(isLogin, getAcademicTermCtrl)
-  .put(isLogin, updateAcademicTermCtrl)
-  .delete(isLogin, deleteAcademicTermCtrl);
+  .get(isAuthenticated(Admin), roleRestriction("admin"), getAcademicTermCtrl)
+  .put(isAuthenticated(Admin), roleRestriction("admin"), updateAcademicTermCtrl)
+  .delete(isAuthenticated(Admin), roleRestriction("admin"), deleteAcademicTermCtrl);
 
 export default academicTermRoutes;

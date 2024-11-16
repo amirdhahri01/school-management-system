@@ -1,5 +1,4 @@
 import express from "express";
-import isLogin from "../../middlewares/isLogin.js";
 import {
   createYearGroupCtrl,
   getYearGroupsCtrl,
@@ -7,15 +6,18 @@ import {
   updateYearGroupCtrl,
   deleteYearGroupCtrl,
 } from "../../controllers/Academics/yearGroupCtrl.js";
+import roleRestriction from "../../middlewares/roleRestriction.js";
+import Admin from "../../models/Staff/Admin.js";
+import isAuthenticated from "../../middlewares/isAuthenticated.js";
 
 const yearGroupRoutes = express.Router();
 yearGroupRoutes.route("/")
-  .get(isLogin, getYearGroupsCtrl)
-  .post(isLogin, createYearGroupCtrl);
+  .get(isAuthenticated(Admin), roleRestriction("admin"), getYearGroupsCtrl)
+  .post(isAuthenticated(Admin), roleRestriction("admin"), createYearGroupCtrl);
 
 yearGroupRoutes.route("/:id")
-  .get(isLogin, getYearGroupCtrl)
-  .put(isLogin, updateYearGroupCtrl)
-  .delete(isLogin, deleteYearGroupCtrl);
+  .get(isAuthenticated(Admin), roleRestriction("admin"), getYearGroupCtrl)
+  .put(isAuthenticated(Admin), roleRestriction("admin"), updateYearGroupCtrl)
+  .delete(isAuthenticated(Admin), roleRestriction("admin"), deleteYearGroupCtrl);
 
 export default yearGroupRoutes;
